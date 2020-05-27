@@ -52,4 +52,11 @@ def ticket_lottery_contestants(exhibit)
   contestants
 end
 
+def draw_lottery_winner(exhibit)
+  bowl = ticket_lottery_contestants(exhibit)
+  if bowl != nil
+    bowl.sample(1)[0]
+  end
+end
+
 end
