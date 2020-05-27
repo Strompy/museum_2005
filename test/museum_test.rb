@@ -19,9 +19,11 @@ class MuseumTest < Minitest::Test
     @patron_1.add_interest("Dead Sea Scrolls")
     @patron_1.add_interest("Gems and Minerals")
     @patron_2.add_interest("IMAX")
+    @patron_3 = Patron.new("Johnny", 5)
+    @patron_3.add_interest("Dead Sea Scrolls")
     @dmns.admit(@patron_1)
     @dmns.admit(@patron_2)
-
+    @dmns.admit(@patron_3)
   end
   def test_it_exists
     assert_instance_of Museum, @dmns
@@ -39,7 +41,7 @@ class MuseumTest < Minitest::Test
   end
 
   def test_it_can_have_patrons
-    assert_equal [@patron_1, @patron_2], @dmns.patrons
+    assert_equal [@patron_1, @patron_2, @patron_3], @dmns.patrons
   end
 
   def test_it_can_recommend_exhibits
@@ -47,6 +49,12 @@ class MuseumTest < Minitest::Test
     assert_equal [@imax], @dmns.recommend_exhibits(@patron_2)
   end
 
-  def test_it_can_admit_patrons
+  def test_it_can_list_patrons_by_exhibit_interest
+    expected = {
+      @gems_and_minerals => [@patron_1],
+      @dead_sea_scrolls => [@patron_1, @patron_3],
+      @imax => [@patron_2]
+    }
+    assert_equal expected, @dmns.patrons_by_exhibit_interest
   end
 end
