@@ -14,7 +14,7 @@ class MuseumTest < Minitest::Test
     @dmns.add_exhibit(@gems_and_minerals)
     @dmns.add_exhibit(@dead_sea_scrolls)
     @dmns.add_exhibit(@imax)
-    @patron_1 = Patron.new("Bob", 20)
+    @patron_1 = Patron.new("Bob", 0)
     @patron_2 = Patron.new("Sally", 20)
     @patron_1.add_interest("Dead Sea Scrolls")
     @patron_1.add_interest("Gems and Minerals")
@@ -63,8 +63,8 @@ class MuseumTest < Minitest::Test
   end
 
   def test_draw_lottery_winner
-    skip
-    assert_equal @patron_1 || @patron_3, @dmns.ticket_lottery_contestants(@dead_sea_scrolls)
+
+    assert_equal @patron_1 || @patron_3, @dmns.draw_lottery_winner(@dead_sea_scrolls)
     assert_equal nil, @dmns.draw_lottery_winner(@gems_and_minerals)
   end
 end
