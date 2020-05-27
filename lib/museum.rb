@@ -16,4 +16,14 @@ class Museum
   def add_patron(patron)
     @patrons << patron
   end
+
+  def recommend_exhibits(patron)
+    recommend = []
+    patron.interests.each do |interest|
+      @exhibits.find_all do |exhibit|
+        recommend << exhibit if interest == exhibit.name
+      end
+    end
+    recommend
+  end
 end
