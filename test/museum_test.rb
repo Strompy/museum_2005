@@ -3,6 +3,7 @@ require './lib/patron'
 require './lib/exhibit'
 require 'minitest/autorun'
 require 'minitest/pride'
+require 'mocha/minitest'
 
 class MuseumTest < Minitest::Test
 
@@ -63,8 +64,18 @@ class MuseumTest < Minitest::Test
   end
 
   def test_draw_lottery_winner
-
-    assert_equal @patron_1 || @patron_3, @dmns.draw_lottery_winner(@dead_sea_scrolls)
+    assert @patron_1 || @patron_3, @dmns.draw_lottery_winner(@dead_sea_scrolls)
     assert_equal nil, @dmns.draw_lottery_winner(@gems_and_minerals)
   end
+
+  def test_announce_lottery_winner
+    bob = mock('patron_bob')
+    dmns = mock('museum')
+    imax = mock('exhibit')
+    imax.stubs(:name).returns('IMAX')
+    dmns.stubs(:announce_lottery_winner).returns("Bob has won the IMAX exhibit lottery")
+    assert_equal "Bob has won the IMAX exhibit lottery", dmns.announce_lottery_winner(imax)
+    assert_equal "No winners for this lottery", @dmns.announce_lottery_winner(@gems_and_minerals)
+  end
+
 end
