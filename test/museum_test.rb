@@ -57,4 +57,14 @@ class MuseumTest < Minitest::Test
     }
     assert_equal expected, @dmns.patrons_by_exhibit_interest
   end
+
+  def test_ticket_lottery_contestants
+    assert_equal [@patron_1, @patron_3], @dmns.ticket_lottery_contestants(@dead_sea_scrolls)
+  end
+
+  def test_draw_lottery_winner
+    skip
+    assert_equal @patron_1 || @patron_3, @dmns.ticket_lottery_contestants(@dead_sea_scrolls)
+    assert_equal nil, @dmns.draw_lottery_winner(@gems_and_minerals)
+  end
 end
